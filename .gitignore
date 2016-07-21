@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# Test storage directory
+storage
+
 # Runtime data
 pids
 *.pid

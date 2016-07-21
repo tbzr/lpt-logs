@@ -1,0 +1,27 @@
+{
+  "name": "lpt-logs",
+  "version": "1.0.0",
+  "description": "log library for NodeJS LPT Services",
+  "main": "logger.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbzr/lpt-logs.git"
+  },
+  "keywords": [
+    "library",
+    "logs",
+    "lpt",
+    "lunettes",
+    "pour",
+    "tous"
+  ],
+  "author": "Thomas Bazire <tbazire@lpt.pm>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbzr/lpt-logs/issues"
+  },
+  "homepage": "https://github.com/tbzr/lpt-logs#readme"
+}
