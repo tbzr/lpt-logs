@@ -96,25 +96,27 @@ class Logger {
 	constructor (options) {
 		var f;
 
-		this.options    = options || {};
-		this.date       = new Date();
+		this.options     = options || {};
+		this.date        = new Date();
 
-		this.options.nl = typeof this.options.nl !== 'undefined' ? this.options.nl : true;
-		this.wfile      = typeof this.options.wfile !== 'undefined' ? this.options.wfile : true;
-		this.stdout     = typeof this.options.stdout !== 'undefined' ? this.options.stdout : true;
-		this.stderr     = this.options.stderr    || false;
+		this.level_limit = this.options.level || DEBUG;
 
-		this.prefix     = this.options.prefix    || 'lpt_';
-		this.extension  = this.options.extension || '.log';
+		this.options.nl  = typeof this.options.nl !== 'undefined' ? this.options.nl : true;
+		this.wfile       = typeof this.options.wfile !== 'undefined' ? this.options.wfile : true;
+		this.stdout      = typeof this.options.stdout !== 'undefined' ? this.options.stdout : true;
+		this.stderr      = this.options.stderr    || false;
 
-		this.encoding   = this.options.encoding  || 'utf8';
+		this.prefix      = this.options.prefix    || 'lpt_';
+		this.extension   = this.options.extension || '.log';
+
+		this.encoding    = this.options.encoding  || 'utf8';
 
 		f = fmtFilename(this.options.path);
 
-		this.path       = f.path;
-		this.filename   = this.prefix;
-		this.filename   += this.options.filename || f.filename;
-		this.file       = this.path + '/' + this.filename + this.extension;
+		this.path        = f.path;
+		this.filename    = this.prefix;
+		this.filename    += this.options.filename || f.filename;
+		this.file        = this.path + '/' + this.filename + this.extension;
 	}
 
 	_write (event) {
