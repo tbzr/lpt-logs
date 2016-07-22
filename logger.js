@@ -96,25 +96,27 @@ class Logger {
 	constructor (options) {
 		var f;
 
-		this.options    = options || {};
-		this.date       = new Date();
+		this.options     = options || {};
+		this.date        = new Date();
 
-		this.options.nl = typeof this.options.nl !== 'undefined' ? this.options.nl : true;
-		this.wfile      = typeof this.options.wfile !== 'undefined' ? this.options.wfile : true;
-		this.stdout     = typeof this.options.stdout !== 'undefined' ? this.options.stdout : true;
-		this.stderr     = this.options.stderr    || false;
+		this.level_limit = this.options.level || DEBUG;
 
-		this.prefix     = this.options.prefix    || 'lpt_';
-		this.extension  = this.options.extension || '.log';
+		this.options.nl  = typeof this.options.nl !== 'undefined' ? this.options.nl : true;
+		this._wfile      = typeof this.options.wfile !== 'undefined' ? this.options.wfile : true;
+		this._stdout     = typeof this.options.stdout !== 'undefined' ? this.options.stdout : true;
+		this._stderr     = this.options.stderr    || false;
 
-		this.encoding   = this.options.encoding  || 'utf8';
+		this._prefix     = this.options.prefix    || 'lpt_';
+		this._extension  = this.options.extension || '.log';
+
+		this._encoding   = this.options.encoding  || 'utf8';
 
 		f = fmtFilename(this.options.path);
 
-		this.path       = f.path;
-		this.filename   = this.prefix;
-		this.filename   += this.options.filename || f.filename;
-		this.file       = this.path + '/' + this.filename + this.extension;
+		this._path       = f.path;
+		this._filename   = this._prefix;
+		this._filename   += this.options.filename || f.filename;
+		this._file       = this._path + '/' + this._filename + this._extension;
 	}
 
 	_write (event) {
@@ -123,11 +125,11 @@ class Logger {
 			event += "\n";
 		}
 
-		if (this.stdout) {
+		if (this._stdout) {
 			process.stdout.write(event);
 		}
 		
-		if (this.stderr) {
+		if (this._stderr) {
 			process.stderr.write(event);
 		}
 	
@@ -137,16 +139,16 @@ class Logger {
 		var self;
 
 		self = this;
-		fs.access(this.file, fs.F_OK, function (err) {
+		fs.access(this._file, fs.F_OK, function (err) {
 			var options;
 
 			options = {
-				encoding: self.encoding,
+				encoding: self._encoding,
 				mode: 0o666,
 				flag: err ? 'w+' : 'a'
 			};
 
-			fs.writeFile(self.file, event + "\n", options, function (err) {
+			fs.writeFile(self._file, event + "\n", options, function (err) {
 				if (err) throw err;
 				return self._write(event);
 			});
@@ -165,23 +167,35 @@ class Logger {
 			+ ' ' + fmtDate(d.getHours())
 			+ ':' + fmtDate(d.getMinutes())
 			+ ':' + fmtDate(d.getSeconds());
-		return "[" + EVENTS[this.level - 1].str + "][" + date + "] " + event;
+		return "[" + EVENTS[this._level - 1].str + "][" + date + "] " + event;
 	}
 
 
 	_log (level, message, context) {
 		var event;
 
-		this.level   = level;
-		this.message = message; 
-		this.context = context || {};
+		this._level   = level;
+		this._message = message; 
+		this._context = context || {};
 
-		event = this._createEvent(sprintf(this.message, this.context));
+		event = this._createEvent(sprintf(this._message, this._context));
 
-		if (this.wfile) {
+		if (this._wfile) {
 			this._writeFile(event);		
 		}
+		return this;
 	}
+
+	_clone () {
+		return Object.assign({ __proto__: this.__proto__ }, this);
+	}
+
+	/**
+	 * Public Methods 
+	 * ------------------------------------------------------------------------
+	 *
+	 */
+
 
 	/**
 	 * State methods
@@ -217,6 +231,57 @@ class Logger {
 
 	debug (message, context) {
 		return this._log(DEBUG, message, context);
+	}
+
+	/**
+	 * Setters
+	 * ----------
+	 */
+	stdout (sw) {
+
+		if (typeof sw === 'undefined') {
+			var clone = this._clone();
+			clone._stdout = true;
+			return clone;
+		}
+		this._stdout = sw ? true : false;
+		return this;
+	}
+
+	stderr (sw) {
+
+		if (typeof sw === 'undefined') {
+			var clone = this._clone();
+			clone._stderr = true;
+			return clone;
+		}
+		this._stderr = sw ? true : false;
+		return this;
+	}
+
+	/**
+	 * Getters
+	 * ------------
+	 */
+
+	getFile () {
+		return this._file;
+	}
+
+	getPath () {
+		return this._path;
+	}
+
+	getFilename () {
+		return this._filename + this._extension;
+	}
+
+	getExtenstion () {
+		return this._extension;
+	}
+
+	getPrefix () {
+		return this._prefix;
 	}
 }
 

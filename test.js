@@ -1,7 +1,7 @@
 'use strict';
 
-var Logs = require('./index');
-
+var Logs = require('./logger');
+var fs   = require('fs');
 /**
  * Callable methods
  * --------------------
@@ -30,7 +30,8 @@ var logger = new Logs({
 	 * filename: String
 	 */
 
-	path: __dirname + '/storage'
+	path: __dirname + '/storage',
+
 });
 
 // logger.info('Hello {name} !', { name: 'Thomas Bazire' });
