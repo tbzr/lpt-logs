@@ -50,16 +50,20 @@ nl        | Boolean | true    | Append a new line character after each event
 
 ## Public Methods
 
-Method    | Parameters       | Description
-----------|------------------|-------------
-emergency | message, context | -
-alert     | message, context | -
-critical  | message, context | -
-error     | message, context | -
-warning   | message, context | -
-notice    | message, context | -
-info      | message, context | -
-debug     | message, context | -
-----------|------------------|-------------
-stdout    | -                | Write the following logs into standard output stream
-stderr    | -                | Write the following logs into standard error stream
+Method       | Parameters       | Description
+-------------|------------------|-------------
+emergency    | message, context | Write log in emergency state
+alert        | message, context | Write log in alert state
+critical     | message, context | Write log in critical state
+error        | message, context | Write log in error state
+warning      | message, context | Write log in warning state
+notice       | message, context | Write log in notice state
+info         | message, context | Write log in info state
+debug        | message, context | Write log in debug state
+stdout       | sw               | Write the following logs into standard output stream or set _stdout option if `sw` is defined
+stderr       | sw               | Write the following logs into standard error stream or set _stderr option if `sw` is defined
+getFile      | -                | Provide current log file
+getPath      | -                | Provide current log directory
+getFilename  | -                | Provide current log filename
+getExtension | -                | Provide current log file extension
+getPrefix    | -                | Provide current log file prefix
