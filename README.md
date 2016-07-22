@@ -50,13 +50,16 @@ nl        | Boolean | true    | Append a new line character after each event
 
 ## Public Methods
 
-Method    | Description
-----------|-------------
-emergency | -
-alert     | -
-critical  | -
-error     | -
-warning   | -
-notice    | -
-info      | -
-debug     | -
+Method    | Parameters       | Description
+----------|------------------|-------------
+emergency | message, context | -
+alert     | message, context | -
+critical  | message, context | -
+error     | message, context | -
+warning   | message, context | -
+notice    | message, context | -
+info      | message, context | -
+debug     | message, context | -
+----------|------------------|-------------
+stdout    | -                | Write the following logs into standard output stream
+stderr    | -                | Write the following logs into standard error stream

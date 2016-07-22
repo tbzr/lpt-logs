@@ -186,6 +186,22 @@ class Logger {
 	}
 
 	/**
+	 * Public Methods 
+	 * ------------------------------------------------------------------------
+	 *
+	 */
+
+	stdout () {
+		this.stdout = true;
+		return this;
+	}
+
+	stderr () {
+		this.stderr = true;
+		return this;
+	}
+
+	/**
 	 * State methods
 	 * -----------------
 	 */
