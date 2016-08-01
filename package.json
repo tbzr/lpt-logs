@@ -23,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/tbzr/lpt-logs/issues"
   },
-  "homepage": "https://github.com/tbzr/lpt-logs#readme"
+  "homepage": "https://github.com/tbzr/lpt-logs#readme",
+  "dependencies": {
+    "async": "^2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  }
 }

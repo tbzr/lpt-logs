@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var async = require('async');
 
 const EMERGENCY = 8;
 const ALERT     = 7;
@@ -117,6 +118,22 @@ class Logger {
 		this._filename   = this._prefix;
 		this._filename   += this.options.filename || f.filename;
 		this._file       = this._path + '/' + this._filename + this._extension;
+
+		// fs.readdir(this._path, function (err, list) {
+		// 	if (err) throw err;
+
+		// 	async.each(list, function (item, next) {
+
+		// 		var pattern = this.date.getFullYear().toString() + (this.date.getMonth() + 1).toString() + this.date.getDate().toString();
+
+		// 		next();
+
+		// 	}, function () {
+		// 		console.log(list);
+		// 	});
+
+		// });
+
 	}
 
 	_write (event) {
@@ -196,6 +213,18 @@ class Logger {
 	 *
 	 */
 
+	handleRequest (req, res, next) {
+
+		this.debug('{method} {url} {status} [{size}]', {
+			method: req.method,
+			url: req.path,
+			status: res._headers ? '- ' + String(res.statusCode) + ' -' : '',
+			size: req.method == 'GET' ? req.query.length : req.body.length
+		});
+
+		next();
+
+	};
 
 	/**
 	 * State methods
@@ -283,6 +312,6 @@ class Logger {
 	getPrefix () {
 		return this._prefix;
 	}
-}
+};
 
 module.exports = Logger;
