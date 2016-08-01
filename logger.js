@@ -213,7 +213,7 @@ class Logger {
 	 *
 	 */
 
-	handleRequest (req, res, next) {
+	requestHandler (req, res, next) {
 
 		this.debug('{method} {url} {status} [{size}]', {
 			method: req.method,
