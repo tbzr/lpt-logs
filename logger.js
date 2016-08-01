@@ -213,19 +213,6 @@ class Logger {
 	 *
 	 */
 
-	requestHandler (req, res, next) {
-
-		this.debug('{method} {url} {status} [{size}]', {
-			method: req.method,
-			url: req.path,
-			status: res._headers ? '- ' + String(res.statusCode) + ' -' : '',
-			size: req.method == 'GET' ? req.query.length : req.body.length
-		});
-
-		next();
-
-	};
-
 	/**
 	 * State methods
 	 * -----------------
@@ -261,6 +248,23 @@ class Logger {
 	debug (message, context) {
 		return this._log(DEBUG, message, context);
 	}
+
+	/**
+	 * Handlers
+	 * -----------
+	 */
+	requestHandler (req, res, next) {
+
+		this.debug('{method} {url} {status} [{size}]', {
+			method: req.method,
+			url: req.path,
+			status: res._headers ? '- ' + String(res.statusCode) + ' -' : '',
+			size: req.method == 'GET' ? req.query.length : req.body.length
+		});
+
+		next();
+
+	};
 
 	/**
 	 * Setters
