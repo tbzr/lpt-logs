@@ -11,11 +11,7 @@ npm install --save tbzr/lpt-logs
 
 ```javascript
 
-var Logs = require('lpt-logs');
-
-var logger = new Logs({
-	// cf: Library options
-});
+var logs = require('lpt-logs');
 
 logger.info('User {username} has logged in.', { username: 'tbzr' });
 
@@ -36,17 +32,23 @@ EMERGENCY | 8
 
 ## Library Options
 
-Name      | Type    | Default | Description
-----------|---------|---------|---------------
-level     | Number  | DEBUG   | 
-prefix    | String  | lpt_    | Log file prefix
-extension | String  | .log    | Log file extension
-filename  | String  | -       | Force log filename, by default today date YYYYMMDD
-encoding  | String  | utf8    | Force log file encoding
-stdout    | Boolean | true    | Log event into standard output stream
-stderr    | Boolean | false   | Log event into standard error stream
-wfile     | Boolean | true    | Log file into a file
-nl        | Boolean | true    | Append a new line character after each event
+Name          | Type    | Default | Description
+--------------|---------|---------|---------------
+debug         | Boolean | false   | Debug mode
+level         | Number  | DEBUG   | 
+prefix        | String  | lpt_    | Log file prefix
+extension     | String  | .log    | Log file extension
+filename      | String  | -       | Force log filename, by default today date YYYYMMDD
+encoding      | String  | utf8    | Force log file encoding
+stdout        | Boolean | true    | Log event into standard output stream
+stderr        | Boolean | false   | Log event into standard error stream
+wfile         | Boolean | true            | Log file into a file
+nl            | Boolean | true        | Append a new line character after each event
+pattern       | String  | [%l][%d] %e | Log patterns
+pattern_token | String  | %           | Log flag pattern
+path          | String  | /var/log    | 
+mode          | Number  | 0o666       |
+	mode: 0o666,
 
 ## Public Methods
 
