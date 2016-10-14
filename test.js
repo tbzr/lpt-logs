@@ -34,4 +34,5 @@ var logger = new Logs({
 
 });
 
-// logger.info('Hello {name} !', { name: 'Thomas Bazire' });
+
+logger.info('Hello {name} !', { name: 'Thomas Bazire' });

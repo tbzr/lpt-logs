@@ -65,34 +65,26 @@ function fmtFilename (path) {
 	return {path: p, filename: f, full: x };
 };
 
-function sprintf (str, ctx) {
+function sprintf (str, ctx, token) {
 	var regx;
 
 	ctx  = ctx || {};
 	for (var i in ctx) {
-		
+
+		token = typeof token !== 'undefined'
+			? '/\%' + i + '/'
+			: '/\{' + i + '\}/';
+
 		if (typeof i === 'string') {
-			regx = eval('/\{' + i + '\}/');
+			regx = eval(token);
 			str = str.replace(regx, ctx[i]);
 		}
 	}
 	return str;
 };
 
-class Logger {
 
-	/**
-	 * Logger states
-	 * --------------------
-	 * emergency
-	 * alert
-	 * critical
-	 * error
-	 * warning
-	 * notice
-	 * info
-	 * debug
-	 */
+class Logger {
 
 	constructor (options) {
 		var f;
@@ -118,22 +110,7 @@ class Logger {
 		this._filename   = this._prefix;
 		this._filename   += this.options.filename || f.filename;
 		this._file       = this._path + '/' + this._filename + this._extension;
-
-		// fs.readdir(this._path, function (err, list) {
-		// 	if (err) throw err;
-
-		// 	async.each(list, function (item, next) {
-
-		// 		var pattern = this.date.getFullYear().toString() + (this.date.getMonth() + 1).toString() + this.date.getDate().toString();
-
-		// 		next();
-
-		// 	}, function () {
-		// 		console.log(list);
-		// 	});
-
-		// });
-
+		this._pattern    = this.options.pattern || "[%c][%d] %e";
 	}
 
 	_write (event) {
@@ -175,7 +152,7 @@ class Logger {
 	}
 
 	_createEvent (event) {
-		var d, date;
+		var d, date, str, e;
 
 		d = new Date();
 		date = fmtDate(d.getFullYear())
@@ -184,7 +161,14 @@ class Logger {
 			+ ' ' + fmtDate(d.getHours())
 			+ ':' + fmtDate(d.getMinutes())
 			+ ':' + fmtDate(d.getSeconds());
-		return "[" + EVENTS[this._level - 1].str + "][" + date + "] " + event;
+
+		e = {
+			'c': EVENTS[this._level - 1].str,
+			'd': date,
+			'e': event
+		};
+
+		return sprintf(this._pattern, e, '%');
 	}
 
 
@@ -248,23 +232,6 @@ class Logger {
 	debug (message, context) {
 		return this._log(DEBUG, message, context);
 	}
-
-	/**
-	 * Handlers
-	 * -----------
-	 */
-	requestHandler (req, res, next) {
-
-		this.debug('{method} {url} {status} [{size}]', {
-			method: req.method,
-			url: req.path,
-			status: res._headers ? '- ' + String(res.statusCode) + ' -' : '',
-			size: req.method == 'GET' ? req.query.length : req.body.length
-		});
-
-		next();
-
-	};
 
 	/**
 	 * Setters
