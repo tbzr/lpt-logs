@@ -1,6 +1,6 @@
 {
   "name": "lpt-logs",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "log library for NodeJS LPT Services",
   "main": "logger.js",
   "scripts": {
