@@ -20,7 +20,7 @@
 			exec = require('child_process').exec;
 			done = this.async();
 			releaseVersion = grunt.template.process("<%= pkg.version %>");
-			return child = exec("git commit -am \"v" + releaseVersion + "\" ; git tag v" + releaseVersion + " && git push --tag origin master", function (err, stdout, stderr) {
+			return child = exec("git commit -am \"v" + releaseVersion + "\" ; git tag --force v" + releaseVersion + " && git push --tag origin master", function (err, stdout, stderr) {
 				if (err != null) {
 					console.log(err);
 				}
