@@ -1,8 +1,19 @@
 {
   "name": "lpt-logs",
   "version": "2.0.1",
-  "description": "log library for NodeJS LPT Services",
-  "main": "logger.js",
+  "description": "log library for expressJS services\"",
+  "main": "./lib/logger.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "async": "^2.1.2"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-bumpx": "^0.2.1",
+    "mocha": "^3.1.2"
+  },
   "scripts": {
     "test": "mocha test"
   },
@@ -23,13 +34,5 @@
   "bugs": {
     "url": "https://github.com/tbzr/lpt-logs/issues"
   },
-  "homepage": "https://github.com/tbzr/lpt-logs#readme",
-  "dependencies": {
-    "async": "^2.0.0"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-bumpx": "^0.2.1",
-    "mocha": "^2.5.3"
-  }
+  "homepage": "https://github.com/tbzr/lpt-logs#readme"
 }
