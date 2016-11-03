@@ -43,4 +43,4 @@ logs.init({
 console.log(logs.config);
 
 
-logs.stdout().info('Hello {name} !', { name: 'Thomas Bazire' });
+logs.stdout().info('Hello {p}://{h}:{pt} !', { p: 'Thomas Bazire',h:'localhost',pt:8885 });
