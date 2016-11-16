@@ -4,17 +4,18 @@ Logs library for LPT APIs
 ## Installation
 
 ```bash
-npm install --save tbzr/lpt-logs
+npm install --save lpt-logs
 ```
 
 ## Usage
 
 ```javascript
 
-var Logs = require('lpt-logs');
+var logger = require('lpt-logs');
 
-var logger = new Logs({
-	// cf: Library options
+logger.init({
+	path: __dirname + '/storage',
+	wfile: true,
 });
 
 logger.info('User {username} has logged in.', { username: 'tbzr' });
